@@ -57,6 +57,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
 
         final LambdaLogger logger = context.getLogger();
         try {
+            int i=0;
             processShipmentUpdates(logger);
             return "SUCCESS";
         } catch (final Exception ex) {
