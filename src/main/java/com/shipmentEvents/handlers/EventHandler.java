@@ -90,7 +90,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
         final AmazonS3 s3Client = EventHandler.getS3Client();
 
         //Create a new file in the Constants.SUMMARY_BUCKET
-        logger.log("Map of statuses -> " + latestStatusForTrackingNumber);
+        logger.log("Map of statuses updated for experiment -> " + latestStatusForTrackingNumber);
         String summaryUpdateName = Long.toString(System.currentTimeMillis());
         
         EventHandler.getS3Client().putObject(Constants.SUMMARY_BUCKET, summaryUpdateName, latestStatusForTrackingNumber.toString());
