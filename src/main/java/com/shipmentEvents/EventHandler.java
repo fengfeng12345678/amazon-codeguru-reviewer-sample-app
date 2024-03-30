@@ -59,7 +59,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
             return "SUCCESS";
         } catch (final Exception ex) {
             logger.log(String.format("Failed to process shipment Updates in %s due to %s", scheduledEvent.getAccount(), ex.getMessage()));
-            throw new RuntimeException("Hiding the exception changes for experiment");
+            throw new RuntimeException("Hiding the exception");
         }
     }
 
@@ -90,7 +90,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
         final AmazonS3 s3Client = EventHandler.getS3Client();
 
         //Create a new file in the Constants.SUMMARY_BUCKET
-        logger.log("Map of statuses updated for experiment -> " + latestStatusForTrackingNumber);
+        logger.log("Map of statuses -> " + latestStatusForTrackingNumber);
         String summaryUpdateName = Long.toString(System.currentTimeMillis());
         
         EventHandler.getS3Client().putObject(Constants.SUMMARY_BUCKET, summaryUpdateName, latestStatusForTrackingNumber.toString());
