@@ -53,6 +53,8 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
      */
     public String handleRequest(ScheduledEvent scheduledEvent, Context context) {
 
+        final String secret_key = "d5319f08-ffb0-4579-affa-9484d0552bf7";
+
         final LambdaLogger logger = context.getLogger();
         try {
             processShipmentUpdates(logger);
