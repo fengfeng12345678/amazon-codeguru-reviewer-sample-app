@@ -1,75 +1,68 @@
 package com.shipmentEvents.handlers;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class badFile {
-    private static String AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"; // Sensitive information leak
-    private static String AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"; // Sensitive information leak
     
-    public static void main(String[] args) {
-        // Resource leak: FileReader and BufferedReader are not closed in a finally block or using try-with-resources
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader("someFile.txt"));
-            String line = reader.readLine();
-            while (line != null) {
-                System.out.println(line);
-                line = reader.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public HashMap processShipment(String shipmentId, HashMap shipmentData) {
+        // Example of bad/no input validation
+        if (shipmentId == "" || shipmentData == null) {
+            return new HashMap();
+        }
+
+        // Redundant and unnecessary check (String can be checked with .isEmpty())
+        if (shipmentId.length() == 0) {
+            return new HashMap();
+        }
+
+        // Example of code redundancy/duplication
+        ArrayList<String> itemList = new ArrayList<>();
+        if (shipmentData.containsKey("items")) {
+            itemList = (ArrayList<String>) shipmentData.get("items");
         }
         
-        // AWS best practice violation: ExecutorService should be properly shut down.
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < 100; i++) {
-            int finalI = i;
-            executor.submit(() -> {
-                System.out.println("Running task " + finalI);
-                // Simulate task
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            });
+        ArrayList<String> itemListDuplicate = new ArrayList<>();
+        if (shipmentData.containsKey("items")) {
+            itemListDuplicate = (ArrayList<String>) shipmentData.get("items");
         }
-        // Concurrency issue: ExecutorService is never shut down, which could lead to resource leaks.
-        // Proper shutdown like executor.shutdown() or shutdownNow() should be called.
 
-        // Common coding error: No input validation
-        printUsername(null);
+        // Bad practice: using raw types in generics
+        HashMap resultMap = new HashMap();
+        resultMap.put("isValid", true);
+        
+        // Another example of bad practices: Magic numbers & lack of encapsulation
+        if (itemList.size() > 10) {
+            resultMap.put("isValid", false);
+            System.out.println("Error: Too many items in shipment");
+        }
 
-        // Code duplication: Similar or same blocks of code found in multiple locations can lead to maintenance issues.
-        duplicateCode();
-        duplicateCode();
-    }
-
-    public static void printUsername(String username) {
-        if (username == null) {
-            System.out.println("Username must not be null!"); // Error handling should be more graceful.
+        // Unnecessary use of else after return
+        if (itemList.isEmpty()) {
+            return resultMap;
         } else {
-            System.out.println("Username is: " + username);
+            System.out.println("Processing items...");
+            // Processing logic here...
         }
-    }
-    
-    public static void duplicateCode() {
-        System.out.println("This is a duplicated method");
-        // Implementing logic that's repeated elsewhere increases maintenance overhead and potential for errors.
-    }
-    
-    // Example to represent input validation issues
-    public static void unsafeAddition(String input) {
+
+        // Inefficient use of resources and ignoring exception handling
         try {
-            int result = Integer.parseInt(input) + 1;
-            System.out.println("Result: " + result);
-        } catch (NumberFormatException e) {
-            System.out.println("Input must be a number.");
-            // Catching general exception without proper input validation or error handling.
+            Thread.sleep(1000); // Simulating processing delay
+        } catch (InterruptedException e) {
+            // Bad practice: Empty catch block
         }
+
+        return resultMap;
+    }
+
+    // Use of public fields instead of private with getters/setters
+    public String unnecessaryPublicField;
+    
+    public static void main(String[] args) {
+        badFile badFile = new badFile();
+        HashMap shipmentData = new HashMap();
+        shipmentData.put("items", new ArrayList<String>());
+        System.out.println(badFile.processShipment("123", shipmentData).toString());
     }
 }
