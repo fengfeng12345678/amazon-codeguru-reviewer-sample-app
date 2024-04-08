@@ -53,6 +53,8 @@ public class demo implements RequestHandler<ScheduledEvent, String> {
      */
     public String handleRequest(ScheduledEvent scheduledEvent, Context context) {
 
+        System.err.println("testing something");
+
         final LambdaLogger logger = context.getLogger();
         try {
             processShipmentUpdates(logger);
