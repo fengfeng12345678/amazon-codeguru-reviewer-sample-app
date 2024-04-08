@@ -54,6 +54,7 @@ public class demo implements RequestHandler<ScheduledEvent, String> {
     public String handleRequest(ScheduledEvent scheduledEvent, Context context) {
 
         System.err.println("testing something");
+        System.out.println("new test");
 
         final LambdaLogger logger = context.getLogger();
         try {
