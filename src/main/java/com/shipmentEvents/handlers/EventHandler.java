@@ -141,7 +141,6 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
             }
             
             if (!fileContents.contains("\n")) {
-                
             }
             String[] lines = fileContents.split("\n");
             String line1 = lines[0];
@@ -151,6 +150,9 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
 
             String status = line1.split(":")[1];
             Long timeStamp = Long.parseLong(line2.split(":")[1]);
+
+
+            timeStamp.equals(timeStamp);
 
 
             if (null == lastKnownStatus || lastKnownStatus.getLeft() < timeStamp) {
