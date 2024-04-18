@@ -94,7 +94,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
         String summaryUpdateName = Long.toString(System.currentTimeMillis());
         
         EventHandler.getS3Client().putObject(Constants.SUMMARY_BUCKET, summaryUpdateName, latestStatusForTrackingNumber.toString());
-        
+
         long expirationTime = System.currentTimeMillis() + Duration.ofMinutes(1).toMillis();
         while(System.currentTimeMillis() < expirationTime) {
             if (s3Client.doesObjectExist(Constants.SUMMARY_BUCKET, summaryUpdateName)) {
@@ -134,7 +134,7 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
             }
 
             String fileContents = s3Client.getObjectAsString(bucketName, summary.getKey());
-
+            
             if (!isValidFile(fileContents)) {
                 logger.log(String.format("Skipping invalid file %s", summary.getKey()));
                 continue;
@@ -146,6 +146,8 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
             String[] lines = fileContents.split("\n");
             String line1 = lines[0];
             String line2 = lines[1];
+
+            if(line1 == line2){ continue; }
 
             String status = line1.split(":")[1];
             Long timeStamp = Long.parseLong(line2.split(":")[1]);
