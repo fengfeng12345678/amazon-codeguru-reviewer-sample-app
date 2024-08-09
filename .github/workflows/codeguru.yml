@@ -1,8 +1,10 @@
 name: Analyze with CodeGuru Reviewer
 
 on: 
- - push
- - workflow_dispatch # This allows manual triggering of the action through the GitHub UI.
+  pull_request:
+      types: [opened]
+  # - push
+  # - workflow_dispatch # This allows manual triggering of the action through the GitHub UI.
 
 permissions:
     id-token: write
@@ -19,8 +21,8 @@ jobs:
       continue-on-error: true
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
-        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::737243363187:role/CodeGuruSecurityGitHubAccessRole
+        aws-region: us-east-1
     
     - uses: actions/checkout@v2
       if: steps.iam-role.outcome == 'success'
@@ -35,12 +37,13 @@ jobs:
       if: steps.iam-role.outcome == 'success'
       run: mvn compile -DskipTests
 
+
     - name: CodeGuru Reviewer
       uses: aws-actions/codeguru-reviewer@v1.1
       if: steps.iam-role.outcome == 'success'
       continue-on-error: false
       with:          
-        s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
+        s3_bucket: codeguru-reviewer-demo-234234sdfsdf
         build_path: ./target/classes
 
     - name: Store SARIF file
@@ -52,6 +55,26 @@ jobs:
 
     - name: Upload review result
       if: steps.iam-role.outcome == 'success'
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: codeguru-results.sarif.json
+
+    - name: CodeGuru Security
+      uses: aws-actions/codeguru-security@v1
+      with:
+        source_path: .
+        aws_region: us-east-1
+        # fail_on_severity: Critical
+    - name: Print findings
+      run: |
+        ls -l
+        cat codeguru-security-results.sarif.json
+
+      # If you want content in security scanning, you’ll need to enable codescanning by going into github.
+      # https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning-for-a-repository
+    - name: Upload result
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: codeguru-security-results.sarif.json
+
+    
