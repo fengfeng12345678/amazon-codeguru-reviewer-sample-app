@@ -192,7 +192,9 @@ public class EventHandler implements RequestHandler<ScheduledEvent, String> {
         return AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
     }
     
-    
+    public ScheduledEvent gsonToJackson(String gsonJson){
+        return GsonJacksonConverter.gsonToJackson(gsonJson, ScheduledEvent.class);
+    }
 }
 
 
