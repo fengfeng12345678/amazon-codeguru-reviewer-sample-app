@@ -3,5 +3,10 @@ public class GsonJacksonConverterTest{
      // here is the gsonToJacksonTest
     assertTrue(true);
   }
+
+  public jacksonToGsonToTest(){
+     // here is the jacksonToGsonToTest
+    assertTrue(true);
+  }
 }
 
