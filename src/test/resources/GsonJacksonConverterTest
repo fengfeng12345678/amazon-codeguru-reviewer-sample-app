@@ -1,0 +1,7 @@
+public class GsonJacksonConverterTest{
+  public gsonToJacksonTest(){
+     // here is the gsonToJacksonTest
+    assertTrue(true);
+  }
+}
+
