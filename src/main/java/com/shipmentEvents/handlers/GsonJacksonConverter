@@ -1,0 +1,29 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+public class GsonJacksonConverter {
+
+    private static final Gson gson = new Gson();
+    private static final ObjectMapper jacksonMapper = new ObjectMapper();
+
+    public static <T> T gsonToJackson(String gsonJson, Class<T> jacksonClass) throws Exception {
+        try {
+            JsonElement jsonElement = JsonParser.parseString(gsonJson);
+            return jacksonMapper.readValue(jsonElement.toString(), jacksonClass);
+        } catch (JsonSyntaxException e) {
+            throw new Exception("Invalid JSON format for Gson.", e);
+        }
+    }
+
+    public static String jacksonToGson(Object jacksonObject) throws Exception {
+        try {
+            String jacksonJson = jacksonMapper.writeValueAsString(jacksonObject);
+            return gson.toJson(JsonParser.parseString(jacksonJson));
+        } catch (Exception e) {
+            throw new Exception("Error converting Jackson object to Gson format.", e);
+        }
+    }
+}
