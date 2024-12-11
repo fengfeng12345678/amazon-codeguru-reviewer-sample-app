@@ -1,4 +1,4 @@
-name: Analyze with CodeGuru Reviewer
+name: nikhil Security Example
 
 on: 
  - push
@@ -6,6 +6,7 @@ on:
 
 permissions:
     id-token: write
+    actions: read
     contents: read
     security-events: write 
 
@@ -14,13 +15,12 @@ jobs:
     name: Analyze with CodeGuru Reviewer
     runs-on: ubuntu-latest
     steps:
-    - name: Configure AWS credentials
-      id: iam-role
-      continue-on-error: true
-      uses: aws-actions/configure-aws-credentials@v1
+    - name: Configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v2
       with:
-        role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
-        aws-region: us-west-2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
     
     - uses: actions/checkout@v2
       if: steps.iam-role.outcome == 'success'
