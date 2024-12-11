@@ -19,8 +19,8 @@ jobs:
       continue-on-error: true
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
-        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::381492151437:user/Codeguru
+        aws-region: us-west-1
     
     - uses: actions/checkout@v2
       if: steps.iam-role.outcome == 'success'
