@@ -61,5 +61,6 @@ jobs:
         if: ${{ always() }}
         uses: aws-actions/codeguru-reviewer@v1.1
         with:
-          build_path: target # build artifact(s) directory. This is only required for Java repositories
-          s3_bucket: codeguru-reviewer-fengfeng # S3 Bucket with "codegurureviewer-*" prefix
+        build_path: target # build artifact(s) directory. This is only required for
+        Java repositories
+        s3_bucket: codeguru-reviewermyactions-bucket # S3 Bucket with "codegurureviewer-*" prefix
