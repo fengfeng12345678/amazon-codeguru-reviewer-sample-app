@@ -20,7 +20,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           audience: sts.amazonaws.com.cn
-          role-to-assume: arn:aws:iam::692859905114:role/GitHub_identity_provider
+          role-to-assume: arn:aws:iam::048169001733:role/GuruGitHubCICDRole
           aws-region: us-west-2
 
       - uses: actions/checkout@v2
