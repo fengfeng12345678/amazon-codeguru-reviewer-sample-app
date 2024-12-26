@@ -20,7 +20,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         audience: sts.amazonaws.com.cn
-        aws-region: us-east-3
+        aws-region: us-west-2
         role-to-assume: arn:aws-cn:iam::123456789100:role/my-github-actions-role
       - name: Configure AWS credentials
         id: iam-role
