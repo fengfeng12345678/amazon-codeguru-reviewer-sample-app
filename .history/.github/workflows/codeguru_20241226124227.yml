@@ -19,7 +19,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           audience: sts.amazonaws.com
-          aws-region: us-east-2
+          aws-region: us-east-3
           role-to-assume: arn:aws:iam::692859905114:role/GitHub_identity_provider
 
       - uses: actions/checkout@v4
