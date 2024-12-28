@@ -24,7 +24,7 @@ jobs:
         with:
           audience: sts.amazonaws.com
           aws-region: ap-southeast-2
-          role-to-assume: arn:aws:iam::692859905114:role/GitHub_identity_provider
+          role-to-assume: arn:aws:iam::692859905114:oidc-provider/token.actions.githubusercontent.com
 
       - uses: actions/checkout@v4
         if: steps.iam-role.outcome == 'success'
