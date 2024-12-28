@@ -4,6 +4,10 @@ on:
   - push
   - workflow_dispatch # This allows manual triggering of the action through the GitHub UI.
 
+env:
+  BUCKET_NAME : "codeguru-reviewer-fengfeng"
+  AWS_REGION : "ap-southeast-2"
+
 permissions:
   id-token: write
   contents: read
