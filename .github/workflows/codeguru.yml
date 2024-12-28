@@ -20,11 +20,11 @@ jobs:
     steps:
       - name: Configure AWS Credentials for China region audience
         continue-on-error: true
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           audience: sts.amazonaws.com
           aws-region: ap-southeast-2
-          role-to-assume: arn:aws:iam::692859905114:oidc-provider/token.actions.githubusercontent.com
+          role-to-assume: arn:aws:iam::692859905114:role/GitHub_identity_provider
 
       - uses: actions/checkout@v4
         if: steps.iam-role.outcome == 'success'
@@ -44,7 +44,7 @@ jobs:
         if: steps.iam-role.outcome == 'success'
         continue-on-error: false
         with:
-          s3_bucket: codeguru-reviewer-github-profiler-demo-048169001733-uw2
+          s3_bucket: codeguru-reviewer-fengfeng
           build_path: ./target/classes
 
       - name: Store SARIF file
