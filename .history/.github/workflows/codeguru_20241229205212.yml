@@ -27,41 +27,34 @@ jobs:
           role-to-assume: arn:aws:iam::692859905114:role/GitHub_identity_provider
 
       - uses: actions/checkout@v4
-        if: ${{ always() }}
         with:
           fetch-depth: 0
       - name: Set up JDK 1.8
-        if: ${{ always() }}
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
       - name: Build project
-        if: ${{ always() }}
         run: mvn compile -DskipTests
 
       - name: CodeGuru Reviewer
         uses: aws-actions/codeguru-reviewer@v1.1
-        if: ${{ always() }}
         continue-on-error: false
         with:
           s3_bucket: codeguru-reviewer-fengfeng
           build_path: ./target/classes
 
       - name: Store SARIF file
-        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: SARIF_recommendations
           path: ./codeguru-results.sarif.json
 
       - name: Upload review result
-        if: ${{ always() }}
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: codeguru-results.sarif.json
 
       - name: Create target/classes directory
-        if: ${{ always() }}
         run: |
           mkdir -p./target
 
