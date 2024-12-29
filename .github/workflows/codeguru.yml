@@ -60,10 +60,14 @@ jobs:
         with:
           sarif_file: codeguru-results.sarif.json
 
+      - name: Create target/classes directory
+        if: steps.iam-role.outcome == 'success'
+        run: |
+          mkdir -p./target
 
       - name: Amazon CodeGuru Reviewer Scanner
         if: ${{ always() }}
         uses: aws-actions/codeguru-reviewer@v1.1
         with:
-          build_path: ./target/classes # build artifact(s) directory. This is only required for Java repositories
+          build_path: ./target # build artifact(s) directory. This is only required for Java repositories
           s3_bucket: codeguru-reviewer-fengfeng # S3 Bucket with "codegurureviewer-*" prefixs
