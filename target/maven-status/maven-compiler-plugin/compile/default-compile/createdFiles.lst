@@ -1,0 +1,3 @@
+com/shipmentEvents/util/S3ClientUtil.class
+com/shipmentEvents/util/Constants.class
+com/shipmentEvents/handlers/EventHandler.class
